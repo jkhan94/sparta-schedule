@@ -32,6 +32,9 @@ dependencies {
     // MySQL
     implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+    // Swqgger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 }
 
 tasks.named('test') {
