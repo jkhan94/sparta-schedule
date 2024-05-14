@@ -17,7 +17,7 @@ public class ScheduleResponseDto {
     private String title;
     private String contents;
     private String responsibility;
-    private String password;
+//    private String password;
     private Date createdDate;
 
     public ScheduleResponseDto(Schedule schedule) {
@@ -25,7 +25,7 @@ public class ScheduleResponseDto {
         this.title = schedule.getTitle();
         this.contents = schedule.getContents();
         this.responsibility = schedule.getResponsibility();
-        this.password = schedule.getPassword();
+//        this.password = schedule.getPassword();
         this.createdDate = schedule.getCreatedDate();
     }
 }

@@ -61,9 +61,9 @@ public class ScheduleController {
                 String title = rs.getString("title");
                 String contents = rs.getString("contents");
                 String responsibility = rs.getString("responsibility");
-                String password=rs.getString("password");
+//                String password=rs.getString("password");
                 Date createdDate = rs.getDate("createdDate");
-                return new ScheduleResponseDto(id, title, contents, responsibility,password, createdDate);
+                return new ScheduleResponseDto(id, title, contents, responsibility, createdDate);
             }
         });
     }
