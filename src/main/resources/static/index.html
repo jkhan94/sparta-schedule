@@ -247,11 +247,11 @@
             getMessages();
         })
 
-        // 메모를 불러와서 보여줍니다.
+        // 스케줄을 불러와서 보여줍니다.
         function getMessages() {
-            // 1. 기존 메모 내용을 지웁니다.
+            // 1. 기존 내용을 지웁니다.
             $('#cards-box').empty();
-            // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+            // 2. 스케줄 목록을 불러와서 HTML로 붙입니다.
             $.ajax({
                 type: 'GET',
                 url: '/api/schedules',
@@ -269,7 +269,7 @@
             })
         }
 
-        // 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
+        // 스케줄 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
         function addHTML(id, title, contents, responsibility, createdDate) {
             // 1. HTML 태그를 만듭니다.
             let tempHtml = `<div class="card">
@@ -308,9 +308,9 @@
             $('#cards-box').append(tempHtml);
         }
 
-        // 메모를 생성합니다.
+        // 스케줄을 생성합니다.
         function writePost() {
-            // 1. 작성한 메모를 불러옵니다.
+            // 1. 작성한 스케줄을 불러옵니다.
             let id = $('#id').val();
             let title = $('#title').val();
             let contents = $('#contents').val();
@@ -318,7 +318,7 @@
             let password = $('#password').val();
             let createdDate = $('#createdDate').val();
 
-            // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+            // 2. 작성한 스케줄이 올바른지 isValidContents 함수를 통해 확인합니다.
             if (isValidContents(contents) == false) {
                 return;
             }
@@ -333,7 +333,7 @@
                 'createdDate': createdDate
             };
 
-            // 5. POST /api/memos 에 data를 전달합니다.
+            // 5. POST /api/schedules 에 data를 전달합니다.
             $.ajax({
                 type: "POST",
                 url: "/api/schedules",
@@ -346,16 +346,16 @@
             });
         }
 
-        // 메모를 수정합니다.
+        // 스케줄을 수정합니다.
         function submitEdit(id) {
-            // 1. 작성 대상 메모의 username과 contents 를 확인합니다.
+            // 1. 작성한 스케줄을 확인합니다.
             let scheduleId=$(`#${id}-id`).val();
             let title = $(`#${id}-inputTitle`).val();
             let contents = $(`#${id}-textarea`).val().trim();
             let password = $(`#${id}-inputPw`).val();
             let responsibility = $(`#${id}-inputResp`).val().trim();
 
-            // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+            // 2. 작성한 스케줄이 올바른지 isValidContents 함수를 통해 확인합니다.
             if (isValidContents(contents) == false) {
                 return;
             }
@@ -369,7 +369,7 @@
                 'responsibility': responsibility,
             };
 
-            // 4. PUT /api/memos/{id} 에 data를 전달합니다.
+            // 4. PUT /api/schedules/{id} 에 data를 전달합니다.
             $.ajax({
                 type: "PUT",
                 url: `/api/schedules/${id}/${password}`,
@@ -382,7 +382,7 @@
             });
         }
 
-        // 메모를 삭제합니다.
+        // 스케줄을 삭제합니다.
         function deleteOne(id) {
             editPost(id);
             let scheduleId=$(`#${id}-id`).val();
@@ -393,7 +393,7 @@
                 'password':password,
             };
 
-            // 1. DELETE /api/memos/{id} 에 요청해서 메모를 삭제합니다.
+            // 1. DELETE /api/schedules/{id} 에 요청해서 스케줄을 삭제합니다.
             $.ajax({
                 type: "DELETE",
                 url: `/api/schedules/${id}/${password}`,
