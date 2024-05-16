@@ -206,8 +206,24 @@
         }
     </style>
     <script>
-    // 사용자가 내용을 올바르게 입력하였는지 확인합니다.
-        function isValidContents(contents) {
+        // 사용자가 내용을 올바르게 입력하였는지 확인합니다.
+        function isValidData(title, contents, responsibility, password,createdDate){
+            if (title == '') {
+                alert('제목을 입력해주세요');
+                return false;
+            }
+            if (responsibility == '') {
+                alert('담당자를 입력해주세요');
+                return false;
+            }
+            if (password == '') {
+                alert('비밀번호를 입력해주세요');
+                return false;
+            }
+            if (createdDate == '') {
+                alert('날짜를 입력해주세요');
+                return false;
+            }
             if (contents == '') {
                 alert('내용을 입력해주세요');
                 return false;
@@ -318,14 +334,14 @@
             let password = $('#password').val();
             let createdDate = $('#createdDate').val();
 
-            // 2. 작성한 스케줄이 올바른지 isValidContents 함수를 통해 확인합니다.
-            if (isValidContents(contents) == false) {
+            // 2. 작성한 스케줄이 올바른지 확인합니다.
+            if (!isValidData(title, contents, responsibility, password,createdDate)) {
                 return;
             }
 
             // 4. 전달할 data JSON으로 만듭니다.
             let data = {
-                'id':id,
+                'id': id,
                 'title': title,
                 'contents': contents,
                 'responsibility': responsibility,
@@ -349,23 +365,23 @@
         // 스케줄을 수정합니다.
         function submitEdit(id) {
             // 1. 작성한 스케줄을 확인합니다.
-            let scheduleId=$(`#${id}-id`).val();
+            let scheduleId = $(`#${id}-id`).val();
             let title = $(`#${id}-inputTitle`).val();
             let contents = $(`#${id}-textarea`).val().trim();
             let password = $(`#${id}-inputPw`).val();
             let responsibility = $(`#${id}-inputResp`).val().trim();
 
-            // 2. 작성한 스케줄이 올바른지 isValidContents 함수를 통해 확인합니다.
-            if (isValidContents(contents) == false) {
+            // 2. 작성한 스케줄이 올바른지 확인합니다.
+            if (!isValidData(title, contents, responsibility, password,createdDate)) {
                 return;
             }
 
             // 3. 전달할 data JSON으로 만듭니다.
             let data = {
-                'id':scheduleId,
+                'id': scheduleId,
                 'title': title,
                 'contents': contents,
-                'password':password,
+                'password': password,
                 'responsibility': responsibility,
             };
 
@@ -385,12 +401,12 @@
         // 스케줄을 삭제합니다.
         function deleteOne(id) {
             editPost(id);
-            let scheduleId=$(`#${id}-id`).val();
+            let scheduleId = $(`#${id}-id`).val();
             let password = $(`#${id}-inputPw`).val();
 
             let data = {
-                'id':scheduleId,
-                'password':password,
+                'id': scheduleId,
+                'password': password,
             };
 
             // 1. DELETE /api/schedules/{id} 에 요청해서 스케줄을 삭제합니다.
