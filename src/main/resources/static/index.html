@@ -207,7 +207,7 @@
     </style>
     <script>
         // 사용자가 내용을 올바르게 입력하였는지 확인합니다.
-        function isValidData(title, contents, responsibility, password,createdDate){
+        function isValidData(title, contents, responsibility, password){
             if (title == '') {
                 alert('제목을 입력해주세요');
                 return false;
@@ -218,10 +218,6 @@
             }
             if (password == '') {
                 alert('비밀번호를 입력해주세요');
-                return false;
-            }
-            if (createdDate == '') {
-                alert('날짜를 입력해주세요');
                 return false;
             }
             if (contents == '') {
@@ -332,10 +328,9 @@
             let contents = $('#contents').val();
             let responsibility = $('#responsibility').val();
             let password = $('#password').val();
-            let createdDate = $('#createdDate').val();
 
             // 2. 작성한 스케줄이 올바른지 확인합니다.
-            if (!isValidData(title, contents, responsibility, password,createdDate)) {
+            if (!isValidData(title, contents, responsibility, password)) {
                 return;
             }
 
@@ -346,13 +341,12 @@
                 'contents': contents,
                 'responsibility': responsibility,
                 'password': password,
-                'createdDate': createdDate
             };
 
             // 5. POST /api/schedules 에 data를 전달합니다.
             $.ajax({
                 type: "POST",
-                url: "/api/schedules",
+                url: "/api/schedules/save",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -372,7 +366,7 @@
             let responsibility = $(`#${id}-inputResp`).val().trim();
 
             // 2. 작성한 스케줄이 올바른지 확인합니다.
-            if (!isValidData(title, contents, responsibility, password,createdDate)) {
+            if (!isValidData(title, contents, responsibility, password)) {
                 return;
             }
 
@@ -439,7 +433,6 @@
         <p><input id="title" type="text" name="title" placeholder="할 일 제목"></p>
         <p><input id="responsibility" type="text" name="responsibility" placeholder="담당자"></p>
         <p><input id="password" type="password" name="password" placeholder="비밀번호"></p>
-        <p><input id="createdDate" type="date" name="createdDate" placeholder="작성일"></p>
         <textarea id="contents" class="field" placeholder="일정을 입력해주세요" name="contents" cols="30"
                   rows="10"></textarea>
         <!--            <button class="btn btn-danger" onclick="writePost()">작성하기</button>-->

@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -20,6 +21,7 @@ public class ScheduleRepository {
 
     public Schedule create(Schedule schedule) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
+        Date date = new Date(System.currentTimeMillis());
 
         String sql = "INSERT INTO schedule (title, contents, responsibility, password, createdDate) VALUES (?, ?,?,?,?)";
         jdbcTemplate.update(con -> {
@@ -29,7 +31,7 @@ public class ScheduleRepository {
                     preparedStatement.setString(2, schedule.getContents());
                     preparedStatement.setString(3, schedule.getResponsibility());
                     preparedStatement.setString(4, schedule.getPassword());
-                    preparedStatement.setDate(5, schedule.getCreatedDate());
+                    preparedStatement.setDate(5, date);
                     return preparedStatement;
                 },
                 keyHolder);
@@ -37,6 +39,7 @@ public class ScheduleRepository {
         // DB Insert 후 받아온 기본키 확인
         Long id = keyHolder.getKey().longValue();
         schedule.setId(id);
+        schedule.setCreatedDate(date);
 
         return schedule;
     }

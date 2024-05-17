@@ -22,7 +22,7 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
-    @PostMapping("/schedules")
+    @PostMapping("/schedules/save")
     @Operation(summary = "스케줄 등록", description = "제목, 내용, 담당자, 비밀번호, 작성일을 전달받아 스케줄을 디비에 저장할 때 사용하는 API")
     @Parameters({
             @Parameter(name = "title", description = "할 일 제목", example = "스프링 입문 과제"),
