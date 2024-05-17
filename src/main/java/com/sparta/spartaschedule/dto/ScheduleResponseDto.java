@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class ScheduleResponseDto {
     private String contents;
     private String responsibility;
 //    private String password;
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     public ScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
