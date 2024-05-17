@@ -195,6 +195,7 @@
         .footer img.icon-delete {
             cursor: pointer;
             position: absolute;
+            display: none;
             bottom: 12px;
             right: 19px;
             width: 14px;
@@ -207,7 +208,7 @@
     </style>
     <script>
         // 사용자가 내용을 올바르게 입력하였는지 확인합니다.
-        function isValidData(title, contents, responsibility, password){
+        function isValidData(title, contents, responsibility, password) {
             if (title == '') {
                 alert('제목을 입력해주세요');
                 return false;
@@ -346,13 +347,13 @@
             // 5. POST /api/schedules 에 data를 전달합니다.
             $.ajax({
                 type: "POST",
-                url: "/api/schedules/save",
+                url: "/api/schedules",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
                     alert('일정이 등록되었습니다.');
                     window.location.reload();
-                }
+                },
             });
         }
 
@@ -382,12 +383,16 @@
             // 4. PUT /api/schedules/{id} 에 data를 전달합니다.
             $.ajax({
                 type: "PUT",
-                url: `/api/schedules/${id}/${password}`,
+                url: `/api/schedules/${id}`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
                     alert('변경에 성공하였습니다.');
                     window.location.reload();
+                },
+                error: function (response, status, error) {
+                    // alert("code:" + response.status + "\n" + "message:" + response.responseText + "\n" + "error:" + error);
+                    alert("문제가 발생했습니다. 입력한 값을 확인해주세요!");
                 }
             });
         }
@@ -406,9 +411,13 @@
             // 1. DELETE /api/schedules/{id} 에 요청해서 스케줄을 삭제합니다.
             $.ajax({
                 type: "DELETE",
-                url: `/api/schedules/${id}/${password}`,
+                url: `/api/schedules/${id}`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
+                error: function (response, status, error) {
+                    // alert("code:" + response.status + "\n" + "message:" + response.responseText + "\n" + "error:" + error);
+                    alert("문제가 발생했습니다. 입력한 값을 확인해주세요!");
+                },
                 success: function (response) {
                     alert('삭제에 성공하였습니다.');
                     window.location.reload();
@@ -456,7 +465,7 @@
             <!-- 버튼 영역-->
             <div class="footer">
                 <img id="1-edit" class="icon-start-edit" src="images/edit.png" alt="" onclick="editPost('1')">
-                <img id="1-delete" class="icon-delete" src="images/delete.png" alt="" onclick="deletePost('1')">
+                <img id="1-delete" class="icon-delete" src="images/delete.png" alt="" onclick="deleteOne('1')">
                 <img id="1-submit" class="icon-end-edit" src="images/done.png" alt="" onclick="submitEdit('1')">
             </div>
         </div>

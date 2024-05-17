@@ -22,7 +22,7 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
-    @PostMapping("/schedules/save")
+    @PostMapping("/schedules")
     @Operation(summary = "스케줄 등록", description = "제목, 내용, 담당자, 비밀번호, 작성일을 전달받아 스케줄을 디비에 저장할 때 사용하는 API")
     @Parameters({
             @Parameter(name = "title", description = "할 일 제목", example = "스프링 입문 과제"),
@@ -41,16 +41,16 @@ public class ScheduleController {
         return scheduleService.getSchedules();
     }
 
-    @PutMapping("/schedules/{id}/{password}")
+    @PutMapping("/schedules/{id}")
     @Operation(summary = "스케줄 수정", description = "입력받은 비밀번호와 디비의 비밀번호가 일치할 경우 전달받은 스케줄 아이디의 일정을 수정.")
-    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @PathVariable String password, @RequestBody ScheduleRequestDto requestDto) {
-        return scheduleService.updateSchedule(id, password, requestDto);
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+        return scheduleService.updateSchedule(id, requestDto);
     }
 
-    @DeleteMapping("/schedules/{id}/{password}")
+    @DeleteMapping("/schedules/{id}")
     @Operation(summary = "스케줄 삭제", description = "입력받은 비밀번호와 디비의 비밀번호가 일치할 경우 전달받은 스케줄 아이디의 일정을 삭제")
-    public void deleteSchedule(@PathVariable Long id, @PathVariable String password) {
-        scheduleService.deleteSchedule(id, password);
+    public void deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+        scheduleService.deleteSchedule(id, requestDto.getPassword());
     }
 
 }

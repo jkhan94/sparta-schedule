@@ -31,16 +31,16 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleResponseDto updateSchedule(Long id, String password, ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
         Schedule schedule = findSchedule(id);
 
-        if (schedule.getPassword().equals(password)) {
+        if (schedule.getPassword().equals(requestDto.getPassword())) {
             schedule.update(requestDto);
 
             schedule = findSchedule(id);; // 수정된 내용을 불러옴
             return new ScheduleResponseDto(schedule);
         } else {
-            throw new IllegalArgumentException("선택한 스케줄은 존재하지 않습니다.");
+            throw new IllegalArgumentException("수정할 수 없습니다.");
         }
     }
 
@@ -49,6 +49,8 @@ public class ScheduleService {
         Schedule schedule = findSchedule(id);
         if (schedule.getPassword().equals(password)) {
             scheduleRepository.delete(schedule);
+        } else {
+            throw new IllegalArgumentException("삭제할 수 없습니다.");
         }
     }
 
